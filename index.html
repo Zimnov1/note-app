@@ -28,6 +28,11 @@
             <p>This is a simple service for creating, editing and viewing short notes.</p>
             <a href="pages/login.html" class="btn">Get Started</a>
         </section>
+        <div id="chat-container">
+            <div id="chat" style="height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 8px;"></div>
+            <input type="text" id="msg" placeholder="Enter message" />
+            <button id="sendBtn">Send</button>
+        </div>
     </main>
 
     <footer>
@@ -37,3 +42,23 @@
     </footer>
 </body>
 </html>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+    const socket = io();
+
+    document.querySelector('#sendBtn').addEventListener('click', () => {
+        const msg = document.querySelector('#msg').value;
+        socket.emit('send_message', msg);
+        document.querySelector('#msg').value = '';
+    });
+
+    socket.on('receive_message', (msg) => {
+        const chat = document.querySelector('#chat');
+        const el = document.createElement('div');
+        el.textContent = msg;
+        chat.appendChild(el);
+        chat.scrollTop = chat.scrollHeight;
+    });
+</script>
