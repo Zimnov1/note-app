@@ -21,16 +21,16 @@
     <main class="container">
         <section class="form">
             <h2>Authorization</h2>
-            <form>
+            <form id="login-form">
                 <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Enter name">
+                <input type="text" id="username" name="username" placeholder="Enter name" required>
 
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter password">
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
 
                 <div class="btn-group">
-                    <a class="btn" href="notes.html">Register</a>
-                    <a class="btn" href="user.html">Login</a>
+                    <a href="create-user.html" class="btn register-btn">Register</a>
+                    <button type="submit" class="btn">Login</button>
                 </div>
             </form>
         </section>
@@ -41,5 +41,35 @@
             <p>&copy; 2025 Note App</p>
         </div>
     </footer>
+
+    <script>
+        document.getElementById("login-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+
+            if (!username || !password) {
+                alert("Please enter both username and password.");
+                return;
+            }
+
+            const userData = localStorage.getItem("user_" + username);
+
+            if (!userData) {
+                alert("User not found. Please register.");
+                return;
+            }
+
+            const user = JSON.parse(userData);
+            if (user.password !== password) {
+                alert("Incorrect password.");
+                return;
+            }
+
+            localStorage.setItem("loggedInUser", JSON.stringify(user));
+            window.location.href = "user.html";
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit User</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Edit Profile</h1>
+            <nav>
+                <a href="../index.html">Home</a>
+                <a href="notes.html">My notes</a>
+                <a href="user.html">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="form">
+            <h2>Edit Account</h2>
+            <form id="edit-form">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" disabled />
+
+                <label for="password">New Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter new password" />
+
+                <label for="role">Role</label>
+                <select id="role" name="role" required>
+                    <option value="admin">Admin</option>
+                    <option value="regular">Regular</option>
+                </select>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn">Save Changes</button>
+                    <button type="button" class="btn register-btn" id="delete-btn">Delete User</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Note App</p>
+        </div>
+    </footer>
+
+    <script>
+    const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!loggedUser) {
+      alert("Not logged in!");
+      window.location.href = "login.html";
+    }
+
+    document.getElementById("username").value = loggedUser.username;
+    document.getElementById("role").value = loggedUser.role;
+
+    document.getElementById("edit-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const password = document.getElementById("password").value;
+      const role = document.getElementById("role").value;
+
+      if (password.length > 0 && password.length < 4) {
+        alert("Password must be at least 4 characters.");
+        return;
+      }
+
+      const updatedUser = {
+        username: loggedUser.username,
+        password: password || loggedUser.password,
+        role: role
+      };
+
+      localStorage.setItem("user_" + updatedUser.username, JSON.stringify(updatedUser));
+      localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
+      alert("User updated.");
+      window.location.href = "user.html";
+    });
+
+    document.getElementById("delete-btn").addEventListener("click", function () {
+      if (confirm("Are you sure you want to delete your account?")) {
+        localStorage.removeItem("user_" + loggedUser.username);
+        localStorage.removeItem("loggedInUser");
+        alert("Account deleted.");
+        window.location.href = "login.html";
+      }
+    });
+    </script>
+</body>
+</html>

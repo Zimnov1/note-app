@@ -18,14 +18,30 @@
         </div>
     </header>
 
-    <main class="container">
-        <section>
-            <h2>User Information</h2>
-            <p><strong>Name:</strong> testuser</p>
-            <p><strong>Role:</strong> Admin</p>
-            <p><strong>Number of notes:</strong> 5</p>
-        </section>
-    </main>
+    <section class="user-info" id="user-info">
+        <h2>User Profile</h2>
+        <ul>
+            <li><strong>Username:</strong> <span id="username"></span></li>
+            <li><strong>Role:</strong> <span id="role"></span></li>
+        </ul>
+
+        <div class="btn-group">
+            <a href="edit-user.html" class="btn">Змінити користувача</a>
+        </div>
+    </section>
+
+
+    <script>
+        const userData = localStorage.getItem("loggedInUser");
+        if (!userData) {
+            alert("Not logged in!");
+            window.location.href = "login.html";
+        } else {
+            const user = JSON.parse(userData);
+            document.getElementById("username").textContent = user.username;
+            document.getElementById("role").textContent = user.role;
+        }
+    </script>
 
     <footer>
         <div class="container">
