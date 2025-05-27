@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editing a note</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Editing a note</h1>
+            <nav>
+                <a href="../index.html">Home</a>
+                <a href="notes.html">My notes</a>
+                <a href="user.html">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h2>Create a Note</h2>
+        <form class="form" id="noteForm">
+            <label for="note">Note text</label>
+            <textarea id="note" rows="5" placeholder="Enter text notes..." required></textarea>
+
+            <label for="tags">Tags (comma-separated)</label>
+            <input type="text" id="tags" placeholder="example: learning, important">
+
+            <div class="btn-group">
+                <button class="btn" type="submit">Save</button>
+                <a class="btn" href="notes.html">Cancel</a>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Note App</p>
+        </div>
+    </footer>
+
+    <script src="../js/note-edit.js"></script>
+</body>
+</html>
